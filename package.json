@@ -1,0 +1,42 @@
+{
+  "name": "vue2-siema",
+  "version": "0.1.0",
+  "description": "Vue component for siema",
+  "main": "siema.vue",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sainf/vue2-siema.git"
+  },
+  "browserify": {
+    "transform": [
+      "vueify"
+    ]
+  },
+  "keywords": [
+    "vue",
+    "siema",
+    "lightweight",
+    "carousel",
+    "slider"
+  ],
+  "author": "Avelino Nogueira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sainf/vue2-siema/issues"
+  },
+  "homepage": "https://github.com/sainf/vue2-siema#readme",
+  "dependencies": {
+    "setinterval-plus": "^1.0.3",
+    "siema": "^1.5.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.17.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-vue": "^4.2.2"
+  }
+}
