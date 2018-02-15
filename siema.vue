@@ -5,7 +5,7 @@
 </template>
 <script>
 
-let Siema, _setInterval, autoPlay
+let Siema, _setInterval, timmer
 
 // ssr / nuxt only in browser import
 if (process.browser) {
@@ -30,29 +30,23 @@ export default {
       default: 6000
     }
   },
-  // mixins: [],
-  data () {
-    return {
-    }
-  },
-  // beforeCreate () {
-  // },
-  // created () {
-  // },
-  // beforeMount () {
-  // },
   mounted () {
     this.init()
   },
   // computed: {
   // },
   beforeDestroy () {
-    this.destroyFunc()
+    timmer.stop()
+    this.siema.destroy()
   },
   methods: {
     init() {
       // get the current selector
       this.options.selector = this.$el
+      // fix timmer if drag or next/prev/goto TODO improve
+      this.options.onChange = () => {
+        if (this.autoPlay) this.playReset()
+      }
       // let's start
       this.siema = new Siema(this.options)
       // check for autoplay
@@ -60,7 +54,6 @@ export default {
     },
     // Basic wrap...
     prev(slide, callback) {
-      if (this.autoPlay) this.resetPlay()
       this.siema.prev(slide, callback)
     },
     next(slide, callback) {
@@ -81,12 +74,6 @@ export default {
     append(item, callback) {
       this.siema.append(item, callback)
     },
-    destroyFunc(restoreMarkup = false, callback) {
-      this.siema.destroy(restoreMarkup, callback)
-      Siema = null
-      _setInterval = null
-      autoPlay = null
-    },
     currentSlide() {
       return this.siema.currentSlide()
     },
@@ -95,21 +82,26 @@ export default {
     },
     // addded autoplay functions
     playInit(time = 6000 ) {
-      autoPlay = new _setInterval(() => { this.siema.next()}, time)
+      timmer= new _setInterval(() => { this.siema.next()}, time)
     },
-    // check https://github.com/thehobbit85/setinterval-plus
-    play(what) {
-      autoPlay[what]()
+    // see https://github.com/thehobbit85/setinterval-plus
+    play() {
+      timmer.start()
     },
-    resetPlay() {
-      autoPlay.stop()
-      autoPlay.play()
+    stop() {
+      timmer.stop()
+    },
+    pause() {
+      timmer.pause()
+    },
+    resume() {
+      timmer.resume()
+    },
+    playReset() {
+      timmer.stop()
+      timmer.start()
     }
-  },
-  // beforeUpdate () {
-  // },
-  // updated () {
-  // },
+  }
 }
 </script>
 <style type="text/css">

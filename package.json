@@ -1,19 +1,14 @@
 {
   "name": "vue2-siema",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue component for siema",
-  "main": "siema.vue",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sainf/vue2-siema.git"
-  },
-  "browserify": {
-    "transform": [
-      "vueify"
-    ]
   },
   "keywords": [
     "vue",
