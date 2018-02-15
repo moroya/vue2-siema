@@ -1,10 +1,11 @@
 # vue2-siema
 
-[![npm](https://img.shields.io/npm/v/vue2-siema.svg) ![npm](https://img.shields.io/npm/dm/vue2-siema.svg)](https://www.npmjs.com/package/vue2-siema)
-[![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
+[![npm](https://img.shields.io/npm/v/vue2-siema.svg)
+![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
 
-A Vue.js Plugin
+A basic wrapper for the [siema](https://pawelgrzybek.com/siema/) javascript library
 
+Added autoplay function.
 
 # Installation
 
@@ -50,9 +51,43 @@ export default {
   }
 }
 ```
-
 # Options
 Use the siema plugin [options](https://github.com/pawelgrzybek/siema#options)
+
+## Methods
+Added wraps to plugin so you can use it:
+
+```this.$refs.siema.init()``` initialize
+
+From the plugin
+
+```this.$refs.siema.prev( slide = 1, callback)```
+
+```this.$refs.siema.next( slide = 1, callback)```
+
+```this.$refs.siema.goTo( index, callback)```
+
+```this.$refs.siema.remove( index, callback)```
+
+```this.$refs.siema.insert( item, index, callback)```
+
+```this.$refs.siema.prepend( item, callback)```
+
+```this.$refs.siema.append( item, callback)```
+
+```this.$refs.siema.currentSlide()``` return current slide
+
+```this.$refs.siema.resizeHandler()``` recalc
+
+Extras:
+
+```this.$refs.siema.stop()``` Stop auto play
+
+```this.$refs.siema.start()``` Start auto play
+
+```this.$refs.siema.pause()``` Pause auto play
+
+```this.$refs.siema.resume()``` Resume auto play
 
 ### Autoplay
 
