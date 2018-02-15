@@ -38,6 +38,19 @@ Vue.use(siema)
 ```
 Wrap with ```<no-ssr><siema...></no-ssr>``` in ssr like nuxt.
 
+```javascript
+export default {
+  data() {
+    return {
+      options: {
+        draggable: true,
+        loop: true
+      }
+    }
+  }
+}
+```
+
 # Options
 Use the siema plugin [options](https://github.com/pawelgrzybek/siema#options)
 
