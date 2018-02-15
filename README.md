@@ -36,7 +36,7 @@ Vue.use(siema)
   <div><p>Hi, I'm slide 5</p></div>
 </siema>
 ```
-Wrap with "<no-ssr>" in ssr like nuxt.
+Wrap with ```<no-ssr><siema...></no-ssr>``` in ssr like nuxt.
 
 # Options
 Use the siema plugin [options](https://github.com/pawelgrzybek/siema#options)
