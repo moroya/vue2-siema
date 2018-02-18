@@ -840,10 +840,6 @@ semver@^5.3.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
-setinterval-plus@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/setinterval-plus/-/setinterval-plus-1.0.3.tgz#175f72c93cea188bfb62a7908973304680f73c03"
-
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"

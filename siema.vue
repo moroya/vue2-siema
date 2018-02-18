@@ -3,14 +3,13 @@
     <slot/>
   </div>
 </template>
-<script>
 
-let Siema, _setInterval, timmer
+<script type="text/babel">
+let Siema, timmer
 
 // ssr / nuxt only in browser import
 if (process.browser) {
   Siema = require('siema')
-  _setInterval = require('setinterval-plus')
 }
 
 export default {
@@ -30,13 +29,17 @@ export default {
       default: 6000
     }
   },
-  mounted () {
+  data() {
+    return {
+      playing: this.autoPlay,
+      time: this.playDuration
+    }
+  },
+  mounted() {
     this.init()
   },
-  // computed: {
-  // },
-  beforeDestroy () {
-    timmer.stop()
+  beforeDestroy() {
+    if (this.playing) clearInterval(timmer)
     this.siema.destroy()
   },
   methods: {
@@ -45,12 +48,12 @@ export default {
       this.options.selector = this.$el
       // fix timmer if drag or next/prev/goto TODO improve
       this.options.onChange = () => {
-        if (this.autoPlay) this.playReset()
+        if (this.playing) this.reset()
       }
       // let's start
       this.siema = new Siema(this.options)
       // check for autoplay
-      if (this.autoPlay) this.playInit(this.playDuration)
+      if (this.playing) this.playInit(this.playDuration)
     },
     // Basic wrap...
     prev(slide, callback) {
@@ -80,30 +83,32 @@ export default {
     resizeHandler() {
       this.siema.resizeHandler()
     },
-    // addded autoplay functions
-    playInit(time = 6000 ) {
-      timmer= new _setInterval(() => { this.siema.next()}, time)
-    },
-    // see https://github.com/thehobbit85/setinterval-plus
-    play() {
-      timmer.start()
+    // start autoplay without props
+    playInit(time = 6000) {
+      if (!this.playing) {
+        this.playing = true
+        timmer = setInterval(() => {
+          this.siema.next()
+        }, time)
+        this.time = time
+      }
     },
     stop() {
-      timmer.stop()
+      this.playing = false
+      clearInterval(timmer)
     },
-    pause() {
-      timmer.pause()
+    play() {
+      this.playing = true
+      this.reset()
     },
-    resume() {
-      timmer.resume()
-    },
-    playReset() {
-      timmer.stop()
-      timmer.start()
+    reset() {
+      if (this.playing) {
+        clearInterval(timmer)
+        timmer = setInterval(() => {
+          this.siema.next()
+        }, this.time)
+      }
     }
   }
 }
 </script>
-<style type="text/css">
-
-</style>
