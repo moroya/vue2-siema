@@ -7,6 +7,8 @@ A basic wrapper for the [siema](https://pawelgrzybek.com/siema/) javascript libr
 
 Added autoplay function.
 
+### Note: This is in alpha stage, any contributions are welcome.
+
 # Installation
 
 ```
@@ -83,11 +85,12 @@ Extras:
 
 ```this.$refs.siema.stop()``` Stop auto play
 
-```this.$refs.siema.start()``` Start auto play
+```this.$refs.siema.play()``` Resume auto play
 
-```this.$refs.siema.pause()``` Pause auto play
+```this.$refs.siema.playInit(time = 6000) ()``` Start auto play without props
 
-```this.$refs.siema.resume()``` Resume auto play
+```this.$refs.siema.reset()``` reset auto play counter
+
 
 ### Autoplay
 
