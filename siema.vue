@@ -83,15 +83,13 @@ export default {
     resizeHandler() {
       this.siema.resizeHandler()
     },
-    // start autoplay without props
+    // start autoplay width and without props
     playInit(time = 6000) {
-      if (!this.playing) {
-        this.playing = true
-        timmer = setInterval(() => {
-          this.siema.next()
-        }, time)
-        this.time = time
-      }
+      this.playing = true
+      this.time = time
+      timmer = setInterval(() => {
+        this.siema.next()
+      }, time)
     },
     stop() {
       this.playing = false
