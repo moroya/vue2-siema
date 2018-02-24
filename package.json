@@ -1,6 +1,6 @@
 {
   "name": "vue2-siema",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Vue component for siema",
   "main": "index.js",
   "scripts": {
