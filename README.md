@@ -77,11 +77,11 @@ From the plugin
 
 ```this.$refs.siema.append( item, callback)```
 
-```this.$refs.siema.currentSlide()``` return current slide
-
 ```this.$refs.siema.resizeHandler()``` recalc
 
-Extras:
+## Extras:
+
+### Autoplay
 
 ```this.$refs.siema.stop()``` Stop auto play
 
@@ -92,8 +92,6 @@ Extras:
 ```this.$refs.siema.reset()``` reset auto play counter
 
 
-### Autoplay
-
 ```html
 <siema ref="siema" class="siema" :options="options" :auto-play="true" :play-duration="2000">
 ```
@@ -103,6 +101,30 @@ defaults
 auto-play: false
 play-duration: 6000
 ```
+
+### Current Slide 
+
+Using the .sync we cant get the "current" slide from the component.
+
+
+```html
+<siema :current.sync="currentSlide" ref="siema" class="siema" :options="options" >
+```
+
+```javascript
+export default {
+  data() {
+    return {
+      options: {
+        draggable: true,
+        loop: true
+      },
+      currentSlide: 0
+    }
+  }
+}
+
+
 
 ---
 

@@ -27,6 +27,10 @@ export default {
     playDuration: {
       type: Number,
       default: 6000
+    },
+    current: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -48,7 +52,11 @@ export default {
       this.options.selector = this.$el
       // fix timmer if drag or next/prev/goto TODO improve
       this.options.onChange = () => {
+        // reset timmer
         if (this.playing) this.reset()
+        // update parent "current" slide with .sync
+        // https://vuejs.org/v2/guide/components.html#sync-Modifier
+        this.$emit('update:current', this.siema.currentSlide )
       }
       // let's start
       this.siema = new Siema(this.options)
@@ -76,9 +84,6 @@ export default {
     },
     append(item, callback) {
       this.siema.append(item, callback)
-    },
-    currentSlide() {
-      return this.siema.currentSlide()
     },
     resizeHandler() {
       this.siema.resizeHandler()
