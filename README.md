@@ -78,6 +78,11 @@ Wrap in no-ssr
 
 [See this demo.](https://sainf.github.io/vue2siema/) 
 
+# Credits
+
+[pawelgrzybek/siema](https://github.com/pawelgrzybek/siema)
+The siema library mentor!
+
 ---
 
 ## License
