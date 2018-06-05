@@ -75,7 +75,7 @@ Wrap in no-ssr
 
 # Usage
 
-[See this demo.](https://github.com/sainf/vue2-siema/blob/master/dist/index.html) 
+[See this demo.](https://sainf.github.io/vue2siema/) 
 
 ---
 
