@@ -8,9 +8,6 @@
 
   //
   var timmer = void 0;
-  // ssr / nuxt only in browser import
-  // if (process.browser) {
-  // }
 
   var script = {
     props: {
@@ -44,27 +41,30 @@
     },
     beforeDestroy: function beforeDestroy() {
       if (this.playing) clearInterval(timmer);
-      this.siema.destroy();
+      this.destroy();
     },
 
     methods: {
       init: function init() {
         var _this = this;
 
-        // get the current selector
+        if (this.options === undefined) this.options = {};
         this.options.selector = this.$el;
-        // fix timmer if drag or next/prev/goto TODO improve
-        this.options.onChange = function () {
-          // reset timmer
-          if (_this.playing) _this.reset();
-          // update parent "current" slide with .sync
-          // https://vuejs.org/v2/guide/components.html#sync-Modifier
-          _this.$emit('update:current', _this.siema.currentSlide);
+        this.options.onInit = function () {
+          _this.$emit('init');
         };
-        // let's start
+        this.options.onChange = function () {
+          _this.$emit('update:current', _this.siema.currentSlide);
+          if (_this.playing) {
+            clearTimeout(timmer);
+            timmer = setTimeout(function () {
+              _this.siema.next();
+            }, _this.time);
+          }
+          _this.$emit('change');
+        };
+        if (this.playing) this.play(this.time);
         this.siema = new Siema(this.options);
-        // check for autoplay
-        if (this.playing) this.playInit(this.playDuration);
       },
 
       // Basic wrap...
@@ -89,39 +89,28 @@
       append: function append(item, callback) {
         this.siema.append(item, callback);
       },
-      resizeHandler: function resizeHandler() {
-        this.siema.resizeHandler();
-      },
+      destroy: function destroy() {
+        var restoreMarkup = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+        var callback = arguments[1];
 
-      // start autoplay width and without props
-      playInit: function playInit() {
+        this.siema.destroy(restoreMarkup, callback);
+      },
+      play: function play() {
         var _this2 = this;
 
         var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 6000;
 
-        this.playing = true;
         this.time = time;
-        timmer = setInterval(function () {
+        this.playing = true;
+        timmer = setTimeout(function () {
           _this2.siema.next();
         }, time);
+        this.$emit('update:playing', true);
       },
       stop: function stop() {
         this.playing = false;
-        clearInterval(timmer);
-      },
-      play: function play() {
-        this.playing = true;
-        this.reset();
-      },
-      reset: function reset() {
-        var _this3 = this;
-
-        if (this.playing) {
-          clearInterval(timmer);
-          timmer = setInterval(function () {
-            _this3.siema.next();
-          }, this.time);
-        }
+        clearTimeout(timmer);
+        this.$emit('update:playing', false);
       }
     }
   };
@@ -234,7 +223,7 @@
   // Plugin
   var plugin = {
     // eslint-disable-next-line no-undef
-    version: "0.1.5",
+    version: "0.2.0",
     install: install
   };
 

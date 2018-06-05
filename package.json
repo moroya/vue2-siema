@@ -1,6 +1,6 @@
 {
   "name": "vue2-siema",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "Vue component for siema",
   "main": "dist/vue2-siema.umd.js",
   "module": "dist/vue2-siema.esm.js",
