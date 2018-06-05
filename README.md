@@ -56,6 +56,8 @@ Wrap in no-ssr
   <siema class...></siem>
 </no-ssr>
 ```
+[A full Nuxt demo](https://github.com/sainf/nuxt-siema-demo)
+
 
 ## Plain vue
 ```html
@@ -71,7 +73,6 @@ Wrap in no-ssr
   </script>
 
 ```
-
 
 # Usage
 
