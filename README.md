@@ -8,6 +8,9 @@ A wrapper for the [siema](https://pawelgrzybek.com/siema/) javascript library
 ![vue2-siema Logo](https://sainf.github.io/vue2siema/vue2siema.png)
 
 
+# Usage
+
+[See this demo.](https://sainf.github.io/vue2siema/) 
 
 # Installation
 
@@ -73,10 +76,6 @@ Wrap in no-ssr
   </script>
 
 ```
-
-# Usage
-
-[See this demo.](https://sainf.github.io/vue2siema/) 
 
 # Credits
 
