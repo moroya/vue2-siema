@@ -1,4 +1,4 @@
-import Siema from './siema.vue'
+import Siema from './components/siema.vue'
 
 // Install the components
 export function install (Vue) {
@@ -7,7 +7,7 @@ export function install (Vue) {
 
 // Expose the components
 export {
-  siema // eslint-disable-line
+  Siema // eslint-disable-line
 }
 
 /* -- Plugin definition & Auto-install -- */
@@ -15,6 +15,8 @@ export {
 
 // Plugin
 const plugin = {
+  // eslint-disable-next-line no-undef
+  version: VERSION,
   install,
 }
 

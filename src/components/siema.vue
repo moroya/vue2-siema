@@ -5,20 +5,14 @@
 </template>
 
 <script type="text/babel">
-let Siema, timmer
-
-// ssr / nuxt only in browser import
-if (process.browser) {
-  Siema = require('siema')
-}
+import Siema from 'siema'
+let timmer
 
 export default {
   props: {
     options: {
       type: Object,
-      default() {
-        return {}
-      }
+      default: () => ({})
     },
     autoPlay: {
       type: Boolean,
@@ -44,24 +38,27 @@ export default {
   },
   beforeDestroy() {
     if (this.playing) clearInterval(timmer)
-    this.siema.destroy()
+    this.destroy()
   },
   methods: {
     init() {
-      // get the current selector
-      this.options.selector = this.$el
-      // fix timmer if drag or next/prev/goto TODO improve
-      this.options.onChange = () => {
-        // reset timmer
-        if (this.playing) this.reset()
-        // update parent "current" slide with .sync
-        // https://vuejs.org/v2/guide/components.html#sync-Modifier
-        this.$emit('update:current', this.siema.currentSlide )
+      if (this.options === undefined) this.options = {}
+      this.options.selector =  this.$el
+      this.options.onInit = () => {
+        this.$emit('init')
       }
-      // let's start
+      this.options.onChange = () => {
+        this.$emit('update:current', this.siema.currentSlide )
+        if (this.playing) {
+          clearTimeout(timmer)
+          timmer = setTimeout(() => {
+            this.siema.next()
+          }, this.time)
+        }
+        this.$emit('change')
+      }
+      if (this.playing) this.play(this.time)
       this.siema = new Siema(this.options)
-      // check for autoplay
-      if (this.playing) this.playInit(this.playDuration)
     },
     // Basic wrap...
     prev(slide, callback) {
@@ -85,32 +82,21 @@ export default {
     append(item, callback) {
       this.siema.append(item, callback)
     },
-    resizeHandler() {
-      this.siema.resizeHandler()
+    destroy(restoreMarkup = false, callback) {
+      this.siema.destroy(restoreMarkup, callback)
     },
-    // start autoplay width and without props
-    playInit(time = 6000) {
-      this.playing = true
+    play(time = 6000) {
       this.time = time
-      timmer = setInterval(() => {
+      this.playing = true
+      timmer = setTimeout(() => {
         this.siema.next()
       }, time)
+      this.$emit('update:playing', true)
     },
     stop() {
       this.playing = false
-      clearInterval(timmer)
-    },
-    play() {
-      this.playing = true
-      this.reset()
-    },
-    reset() {
-      if (this.playing) {
-        clearInterval(timmer)
-        timmer = setInterval(() => {
-          this.siema.next()
-        }, this.time)
-      }
+      clearTimeout(timmer)
+      this.$emit('update:playing', false)
     }
   }
 }
