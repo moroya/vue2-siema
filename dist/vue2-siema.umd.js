@@ -28,6 +28,10 @@
       current: {
         type: Number,
         default: 0
+      },
+      ready: {
+        type: Boolean,
+        default: true
       }
     },
     data: function data() {
@@ -37,7 +41,7 @@
       };
     },
     mounted: function mounted() {
-      this.init();
+      if (this.ready) this.init();
     },
     beforeDestroy: function beforeDestroy() {
       if (this.playing) clearInterval(timmer);
@@ -48,23 +52,25 @@
       init: function init() {
         var _this = this;
 
-        if (this.options === undefined) this.options = {};
-        this.options.selector = this.$el;
-        this.options.onInit = function () {
-          _this.$emit('init');
-        };
-        this.options.onChange = function () {
-          _this.$emit('update:current', _this.siema.currentSlide);
-          if (_this.playing) {
-            clearTimeout(timmer);
-            timmer = setTimeout(function () {
-              _this.siema.next();
-            }, _this.time);
-          }
-          _this.$emit('change');
-        };
-        if (this.playing) this.play(this.time);
-        this.siema = new Siema(this.options);
+        this.$nextTick(function () {
+          if (_this.options === undefined) _this.options = {};
+          _this.options.selector = _this.$el;
+          _this.options.onInit = function () {
+            _this.$emit('init');
+          };
+          _this.options.onChange = function () {
+            _this.$emit('update:current', _this.siema.currentSlide);
+            if (_this.playing) {
+              clearTimeout(timmer);
+              timmer = setTimeout(function () {
+                _this.siema.next();
+              }, _this.time);
+            }
+            _this.$emit('change');
+          };
+          if (_this.playing) _this.play(_this.time);
+          _this.siema = new Siema(_this.options);
+        });
       },
 
       // Basic wrap...
@@ -223,7 +229,7 @@
   // Plugin
   var plugin = {
     // eslint-disable-next-line no-undef
-    version: "0.2.0",
+    version: "0.2.1",
     install: install
   };
 

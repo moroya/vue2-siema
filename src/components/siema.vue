@@ -25,6 +25,10 @@ export default {
     current: {
       type: Number,
       default: 0
+    },
+    ready: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -34,7 +38,7 @@ export default {
     }
   },
   mounted() {
-    this.init()
+    if (this.ready) this.init()
   },
   beforeDestroy() {
     if (this.playing) clearInterval(timmer)
@@ -42,23 +46,25 @@ export default {
   },
   methods: {
     init() {
-      if (this.options === undefined) this.options = {}
-      this.options.selector =  this.$el
-      this.options.onInit = () => {
-        this.$emit('init')
-      }
-      this.options.onChange = () => {
-        this.$emit('update:current', this.siema.currentSlide )
-        if (this.playing) {
-          clearTimeout(timmer)
-          timmer = setTimeout(() => {
-            this.siema.next()
-          }, this.time)
+      this.$nextTick(()=> {
+        if (this.options === undefined) this.options = {}
+        this.options.selector =  this.$el
+        this.options.onInit = () => {
+          this.$emit('init')
         }
-        this.$emit('change')
-      }
-      if (this.playing) this.play(this.time)
-      this.siema = new Siema(this.options)
+        this.options.onChange = () => {
+          this.$emit('update:current', this.siema.currentSlide )
+          if (this.playing) {
+            clearTimeout(timmer)
+            timmer = setTimeout(() => {
+              this.siema.next()
+            }, this.time)
+          }
+          this.$emit('change')
+        }
+        if (this.playing) this.play(this.time)
+        this.siema = new Siema(this.options)
+      })
     },
     // Basic wrap...
     prev(slide, callback) {
