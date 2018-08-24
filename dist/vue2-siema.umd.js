@@ -7,7 +7,6 @@
   Siema = Siema && Siema.hasOwnProperty('default') ? Siema['default'] : Siema;
 
   //
-  var timmer = void 0;
 
   var script = {
     props: {
@@ -44,7 +43,7 @@
       if (this.ready) this.init();
     },
     beforeDestroy: function beforeDestroy() {
-      if (this.playing) clearInterval(timmer);
+      if (this.playing) clearInterval(this.$options.play_timer);
       this.destroy();
     },
 
@@ -61,8 +60,8 @@
           _this.options.onChange = function () {
             _this.$emit('update:current', _this.siema.currentSlide);
             if (_this.playing) {
-              clearTimeout(timmer);
-              timmer = setTimeout(function () {
+              clearTimeout(_this.$options.play_timer);
+              _this.$options.play_timer = setTimeout(function () {
                 _this.siema.next();
               }, _this.time);
             }
@@ -108,14 +107,14 @@
 
         this.time = time;
         this.playing = true;
-        timmer = setTimeout(function () {
+        this.$options.play_timer = setTimeout(function () {
           _this2.siema.next();
         }, time);
         this.$emit('update:playing', true);
       },
       stop: function stop() {
         this.playing = false;
-        clearTimeout(timmer);
+        clearTimeout(this.$options.play_timer);
         this.$emit('update:playing', false);
       }
     }
@@ -229,7 +228,7 @@
   // Plugin
   var plugin = {
     // eslint-disable-next-line no-undef
-    version: "0.2.1",
+    version: "0.2.2",
     install: install
   };
 

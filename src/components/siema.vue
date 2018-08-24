@@ -6,7 +6,6 @@
 
 <script type="text/babel">
 import Siema from 'siema'
-let timmer
 
 export default {
   props: {
@@ -41,7 +40,7 @@ export default {
     if (this.ready) this.init()
   },
   beforeDestroy() {
-    if (this.playing) clearInterval(timmer)
+    if (this.playing) clearInterval(this.$options.play_timer)
     this.destroy()
   },
   methods: {
@@ -55,8 +54,8 @@ export default {
         this.options.onChange = () => {
           this.$emit('update:current', this.siema.currentSlide )
           if (this.playing) {
-            clearTimeout(timmer)
-            timmer = setTimeout(() => {
+            clearTimeout(this.$options.play_timer)
+            this.$options.play_timer = setTimeout(() => {
               this.siema.next()
             }, this.time)
           }
@@ -94,14 +93,14 @@ export default {
     play(time = 6000) {
       this.time = time
       this.playing = true
-      timmer = setTimeout(() => {
+      this.$options.play_timer = setTimeout(() => {
         this.siema.next()
       }, time)
       this.$emit('update:playing', true)
     },
     stop() {
       this.playing = false
-      clearTimeout(timmer)
+      clearTimeout(this.$options.play_timer)
       this.$emit('update:playing', false)
     }
   }
