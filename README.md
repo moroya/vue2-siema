@@ -1,5 +1,7 @@
 # vue2-siema
 
+[Dead project!?](https://twitter.com/pawelgrzybek/status/1045199798838669312)
+
 [![npm](https://img.shields.io/npm/v/vue2-siema.svg)
 ![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
 
