@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/sainf/vue2-siema#readme",
   "dependencies": {
-    "siema": "^1.5.1"
+    "siema": "moroya/siema#master"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
